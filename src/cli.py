@@ -2,7 +2,6 @@ import sys
 import click
 from calculator import add, subtract, multiply, divide, power, square_root
 
-
 @click.command()
 @click.argument("operation")
 @click.argument("num1", type=float)
@@ -10,7 +9,8 @@ from calculator import add, subtract, multiply, divide, power, square_root
 def calculate(operation, num1, num2=None):
     """Simple calculator CLI"""
     try:
-        if num2 is None and operation in ["add", "subtract", "multiply", "divide"]:
+        # Operations that require two operands
+        if num2 is None and operation in ["add", "subtract", "multiply", "divide", "power"]:
             raise ValueError("Missing second operand")
 
         if operation == "add":
@@ -21,6 +21,10 @@ def calculate(operation, num1, num2=None):
             result = multiply(num1, num2)
         elif operation == "divide":
             result = divide(num1, num2)
+        elif operation == "power":
+            result = power(num1, num2)
+        elif operation in ("square_root", "sqrt"):
+            result = square_root(num1)
         else:
             click.echo(f"Unknown operation: {operation}")
             sys.exit(1)
@@ -34,6 +38,5 @@ def calculate(operation, num1, num2=None):
         click.echo(f"Unexpected error: {e}")
         sys.exit(1)
 
-
 if __name__ == "__main__":
-    calculate()
+    calculate

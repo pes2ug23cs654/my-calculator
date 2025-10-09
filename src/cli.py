@@ -1,7 +1,11 @@
+"""
+Command Line Interface for Calculator
+Example: python -m src.cli add 5 3
+"""
+
 import sys
 import click
-from calculator import add, subtract, multiply, divide, power, square_root
-
+from .calculator import add, subtract, multiply, divide, power, square_root
 
 @click.command()
 @click.argument("operation")
@@ -10,9 +14,6 @@ from calculator import add, subtract, multiply, divide, power, square_root
 def calculate(operation, num1, num2=None):
     """Simple calculator CLI"""
     try:
-        if num2 is None and operation in ["add", "subtract", "multiply", "divide"]:
-            raise ValueError("Missing second operand")
-
         if operation == "add":
             result = add(num1, num2)
         elif operation == "subtract":
@@ -21,19 +22,26 @@ def calculate(operation, num1, num2=None):
             result = multiply(num1, num2)
         elif operation == "divide":
             result = divide(num1, num2)
+        elif operation == "power":
+            result = power(num1, num2)
+        elif operation in ("square_root", "sqrt"):
+            result = square_root(num1)
         else:
             click.echo(f"Unknown operation: {operation}")
             sys.exit(1)
 
+        # Format result nicely
         if result == int(result):
             click.echo(int(result))
         else:
             click.echo(f"{result:.2f}")
 
-    except Exception as e:
+    except ValueError as e:
+        click.echo(f"Error: {e}")
+        sys.exit(1)
+    except Exception as e:  # pylint: disable=broad-except
         click.echo(f"Unexpected error: {e}")
         sys.exit(1)
 
-
 if __name__ == "__main__":
-    calculate()
+    calculate()  # pylint: disable=no-value-for-parameter

@@ -1,4 +1,9 @@
+************* Module src.cli
+src\cli.py:8:0: E0401: Unable to import 'calculator' (import-error)
+src\cli.py:47:11: W0718: Catching too general exception Exception (broad-exception-caught)
+src\cli.py:52:4: E1120: No value for argument 'operation' in function call (no-value-for-parameter)
+src\cli.py:52:4: E1120: No value for argument 'num1' in function call (no-value-for-parameter)
 
---------------------------------------------------------------------
-Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+------------------------------------------------------------------
+Your code has been rated at 7.46/10 (previous run: 7.46/10, +0.00)
 

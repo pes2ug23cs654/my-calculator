@@ -5,7 +5,7 @@ Example: python src/cli.py add 5 3
 
 import sys
 import click
-from calculator import add, subtract, multiply, divide, power, square_root
+from .calculator import add, subtract, multiply, divide, power, square_root
 
 
 @click.command()
@@ -15,6 +15,10 @@ from calculator import add, subtract, multiply, divide, power, square_root
 def calculate(operation, num1, num2=None):
     """Simple calculator CLI"""
     try:
+        # Validate second operand presence for binary operations
+        if num2 is None and operation in ["add", "subtract", "multiply", "divide"]:
+            raise ValueError("Missing second operand")
+
         if operation == "add":
             result = add(num1, num2)
         elif operation == "subtract":
@@ -26,20 +30,12 @@ def calculate(operation, num1, num2=None):
         else:
             click.echo(f"Unknown operation: {operation}")
             sys.exit(1)
-    except Exception as e:
-        click.echo(f"An error occurred: {e}")
-        sys.exit(1)
 
-
-        # Format result nicely
+        # Print result with formatting
         if result == int(result):
             click.echo(int(result))
         else:
             click.echo(f"{result:.2f}")
-
-    except ValueError as e:
-        click.echo(f"Error: {e}")
-        sys.exit(1)
 
     except Exception as e:
         click.echo(f"Unexpected error: {e}")

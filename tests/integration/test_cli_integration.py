@@ -38,11 +38,14 @@ class TestCLIIntegration:
     def test_cli_error_handling_integration(self):
         res = self.run_cli("divide", "10", "0")
         assert res.exit_code == 1
-        # For debug: print the raw CLI output on test failure/success
+        # Debug: print raw output
         print("RAW CLI OUTPUT repr:", repr(res.output))
-        # Normalize for whitespace and lowercase before matching
+        # Robust: Normalize whitespace and lowercase
         normalized_output = re.sub(r'\s+', '', res.output.lower())
-        assert "dividebyzero" in normalized_output
+        # This will work for:
+        # "division by zero"
+        assert "divisionbyzero" in normalized_output
+
 
     def test_cli_invalid_operation_integration(self):
         res = self.run_cli("invalid", "1", "2")

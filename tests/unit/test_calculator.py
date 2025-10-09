@@ -5,7 +5,8 @@ Students start with 2 passing tests, then add more
 
 import sys
 import click
-from .calculator import add, subtract, multiply, divide, power, square_root
+from src.calculator import add, subtract, multiply, divide, power, square_root
+import pytest
 
 
 class TestBasicOperations:

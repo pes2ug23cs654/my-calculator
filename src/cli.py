@@ -1,11 +1,6 @@
-"""
-Command Line Interface for Calculator
-Example: python src/cli.py add 5 3
-"""
-
 import sys
 import click
-from .calculator import add, subtract, multiply, divide, power, square_root
+from calculator import add, subtract, multiply, divide, power, square_root
 
 
 @click.command()
@@ -15,7 +10,6 @@ from .calculator import add, subtract, multiply, divide, power, square_root
 def calculate(operation, num1, num2=None):
     """Simple calculator CLI"""
     try:
-        # Validate second operand presence for binary operations
         if num2 is None and operation in ["add", "subtract", "multiply", "divide"]:
             raise ValueError("Missing second operand")
 
@@ -31,7 +25,6 @@ def calculate(operation, num1, num2=None):
             click.echo(f"Unknown operation: {operation}")
             sys.exit(1)
 
-        # Print result with formatting
         if result == int(result):
             click.echo(int(result))
         else:
